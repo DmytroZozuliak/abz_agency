@@ -1,26 +1,27 @@
 /* eslint-disable prettier/prettier */
 import { ThemeOptions, createTheme } from '@mui/material';
 
-const primaryColor = '#689f38';
-const fontColor = 'coral';
+const primaryColor = '#F4E041';
+const secondaryColor = '#00BDD3';
+const fontColor = '#000000';
 
 export const themeOptions: ThemeOptions = {
   palette: {
     mode: 'light',
     background: {
       paper: '#e3e3e3',
-      default: 'grey',
+      default: '#F8F8F8',
     },
     primary: {
       main: primaryColor,
       contrastText: fontColor,
     },
     secondary: {
-      main: '#e1e1e1',
+      main: secondaryColor,
       contrastText: fontColor,
     },
     error: {
-      main: '#ffa6a4',
+      main: '#CB3D40',
       contrastText: fontColor,
     },
     warning: {
@@ -37,16 +38,21 @@ export const themeOptions: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: 'sans-serif',
-    // fontFamily: [
-    //   'Chilanka',
-    //   'cursive',
-    // ].join(','),
+    fontFamily: [
+      'Nunito', 'sans-serif',
+    ].join(','),
+    h1: {
+      fontSize: '40px',
+      lineHeight: '40px',
+    },
     allVariants: {
       color: fontColor,
+      fontSize: '16px',
+      lineHeight: '26px',
     },
   },
   components: {
+
     MuiMenuItem: {
       styleOverrides: {
         root: ({ ownerState }) => ({
@@ -74,46 +80,44 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
-    MuiIconButton: {
-      styleOverrides: {
-        root: ({ ownerState }) => ({
-          ...((ownerState.className === 'header-btn active' && {
-            color: '#fefefe',
-            ':hover': {
-              color: '#cfcfcf',
-              background: 'transparent',
-            },
-          }) ||
-            (ownerState.className === 'header-btn' && {
-              ':hover': {
-                color: '#cfcfcf',
-                background: 'transparent',
-              },
-            })),
-        }),
-      },
-    },
     MuiButton: {
       styleOverrides: {
-        root: ({ ownerState }) => ({
-          ...((ownerState.className === 'header-btn active' && {
-            color: '#fefefe',
-            ':hover': {
-              color: '#cfcfcf',
-            },
-          }) ||
-            (ownerState.className === 'header-btn' && {
-              ':hover': {
-                color: '#cfcfcf',
-              },
-            }) || {
-            '&.MuiButton-containedPrimary': {
-              ':hover': {
-                backgroundColor: '#7dbf46',
-              },
-            },
-          }),
-        }),
+        root: {
+          width: '100px',
+          height: '34px',
+          textTransform: 'capitalize',
+          borderRadius: '80px',
+          boxShadow: 'none',
+          color: fontColor,
+          ':hover': {
+            backgroundColor: '#FFE302',
+            boxShadow: 'none',
+          },
+          ':disabled': {
+            backgroundColor: '#B4B4B4',
+            color: '#fff',
+            boxShadow: 'none',
+          },
+        }
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none',
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          background: '#fff',
+          padding: '20px',
+          borderRadius: '10px',
+          ':last-child': {
+            paddingBottom: '20px',
+          },
+        },
       },
     },
     MuiCssBaseline: {
@@ -132,9 +136,6 @@ export const themeOptions: ThemeOptions = {
     },
   },
   spacing: 7,
-  shape: {
-    borderRadius: 6,
-  },
 };
 
 export const lightTheme = createTheme(themeOptions);

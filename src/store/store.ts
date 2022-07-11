@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import formSlice from './reducers/formSlice';
+import apiSlice from './slices/apiSlice';
 
 const rootReducer = combineReducers({
-  formSlice: formSlice,
+  apiSlice,
 });
 
 export const store = configureStore({
