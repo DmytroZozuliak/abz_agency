@@ -1,12 +1,12 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import { Container } from '@mui/system';
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import { fetchMoreUsers, fetchUsers } from '../../store/ActionCreators/ActionCreators';
 import CardUser from '../CardUser/CardUser';
 import classes from './CardsUsers.module.scss';
 
-const CardsUsers = () => {
+const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
   const { isLoading, error, users, linkNext, buttonDisable } = useTypedSelector(
     (state) => state.apiSlice
   );
@@ -15,7 +15,12 @@ const CardsUsers = () => {
 
   async function getUsers(url: string | null) {
     url && (await dispatch(fetchMoreUsers(url)));
-    moreButton.current && moreButton.current.scrollIntoView();
+    moreButton.current &&
+      moreButton.current.scrollIntoView({
+        block: 'center',
+        inline: 'nearest',
+        behavior: 'smooth',
+      });
   }
 
   useEffect(() => {
@@ -24,11 +29,12 @@ const CardsUsers = () => {
 
   return (
     <Container maxWidth="lg">
-      <Box className={classes.container}>
+      <Box ref={ref} className={classes.container}>
         <Typography variant="h1" component="h2" marginBottom="50px">
           Working with GET request
         </Typography>
-        {isLoading && <div>Loading...</div>}
+
+        {isLoading && <CircularProgress />}
         {error && <div>{error}</div>}
         <Grid
           container
@@ -54,6 +60,6 @@ const CardsUsers = () => {
       </Box>
     </Container>
   );
-};
+});
 
 export default CardsUsers;

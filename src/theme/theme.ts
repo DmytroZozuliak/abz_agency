@@ -4,6 +4,8 @@ import { ThemeOptions, createTheme } from '@mui/material';
 const primaryColor = '#F4E041';
 const secondaryColor = '#00BDD3';
 const fontColor = '#000000';
+const secondaryFontColor = '#7E7E7E';
+
 
 export const themeOptions: ThemeOptions = {
   palette: {
@@ -18,7 +20,7 @@ export const themeOptions: ThemeOptions = {
     },
     secondary: {
       main: secondaryColor,
-      contrastText: fontColor,
+      contrastText: secondaryFontColor,
     },
     error: {
       main: '#CB3D40',
@@ -123,6 +125,7 @@ export const themeOptions: ThemeOptions = {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
+          scrollBehavior: 'smooth',
           '*::-webkit-scrollbar': {
             width: '5px',
             height: '15px',
@@ -138,4 +141,4 @@ export const themeOptions: ThemeOptions = {
   spacing: 7,
 };
 
-export const lightTheme = createTheme(themeOptions);
+export const theme = createTheme(themeOptions);

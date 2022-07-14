@@ -1,5 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchUsers, fetchMoreUsers, IUser, IUsers } from '../ActionCreators/ActionCreators';
+import {
+  fetchUsers,
+  fetchMoreUsers,
+  IUser,
+  IUsers,
+  fetchPositions,
+  IPosition,
+  IPositions,
+} from '../ActionCreators/ActionCreators';
 
 export interface IApiPage {
   isLoading: boolean;
@@ -7,6 +15,9 @@ export interface IApiPage {
   users: IUser[];
   linkNext: string | null;
   buttonDisable: boolean;
+  positions: IPosition[];
+  isLoadingPositions: boolean;
+  errorPositions: string | null;
 }
 
 const initialState: IApiPage = {
@@ -15,6 +26,9 @@ const initialState: IApiPage = {
   users: [],
   linkNext: null,
   buttonDisable: true,
+  positions: [],
+  isLoadingPositions: false,
+  errorPositions: null,
 };
 
 const apiSlice = createSlice({
@@ -65,6 +79,18 @@ const apiSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
       state.buttonDisable = true;
+    },
+    [fetchPositions.fulfilled.type]: (state, action: PayloadAction<IPositions>) => {
+      state.positions = action.payload.positions;
+      state.isLoadingPositions = false;
+      state.errorPositions = null;
+    },
+    [fetchPositions.pending.type]: (state) => {
+      state.isLoadingPositions = true;
+    },
+    [fetchPositions.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.errorPositions = action.payload;
+      state.isLoadingPositions = false;
     },
   },
 });

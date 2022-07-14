@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
+import { boolean } from 'yup';
 
 interface IQueries {
   page: number;
@@ -31,9 +32,21 @@ export interface IUser {
   registration_timestamp: number;
 }
 
+export interface IPositions {
+  "success": boolean;
+  "positions": IPosition[];
+}
+
+export interface IPosition {
+  "id": number;
+  "name": string;
+}
+
 // https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=5
+//  https://frontend-test-assignment-api.abz.agency/api/v1/positions
 export const baseUrl = ' https://frontend-test-assignment-api.abz.agency/api/v1';
 const usersUrl = `${baseUrl}/users`;
+const positionsUrl = `${baseUrl}/positions`;
 
 const headers = {
   Accept: 'application/json',
@@ -87,22 +100,12 @@ export const fetchMoreUsers = createAsyncThunk(
   }
 );
 
-/* import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
-
-interface IQueries {
-  value: string;
-  limit: number;
-  page: number;
-}
-
-export const fetchCharacters = createAsyncThunk(
-  'api/fetchCharacters',
-  async (queries: IQueries, thunkAPI) => {
+export const fetchPositions = createAsyncThunk(
+  'api/fetchPositions',
+  async (_: null, thunkAPI) => {
     try {
-      const { value, limit, page } = queries;
-      const characters = await getAllCharactersFilters(value, limit, page);
-      return characters;
+      const positionsResponse = await axios.get<IPositions>(positionsUrl);
+      return positionsResponse.data;
     } catch (err) {
       const error = err as AxiosError;
       if (error.response) {
@@ -117,67 +120,3 @@ export const fetchCharacters = createAsyncThunk(
     }
   }
 );
-
-export const fetchQuotes = createAsyncThunk('api/fetchQuotes', async (_, thunkAPI) => {
-  try {
-    const quotes = await getAllQuotes();
-    return quotes;
-  } catch (err) {
-    const error = err as AxiosError;
-    if (error.response) {
-      if (error.response.status === 429) {
-        return thunkAPI.rejectWithValue('Too many requests');
-      } else {
-        return thunkAPI.rejectWithValue('Could not get data');
-      }
-    } else {
-      return thunkAPI.rejectWithValue('Could not get data');
-    }
-  }
-});
-
-// \\\\\\\\\\\\\\\
-export const baseUrl = 'https://the-one-api.dev/v2';
-const quotesUrl = `${baseUrl}/quote`;
-const charactersUrl = `${baseUrl}/character`;
-
-const headers = {
-  Accept: 'application/json',
-  Authorization: 'Bearer QCWRYhej4z3WGyy1CTGg', // dmytro
-  // Authorization: 'Bearer fiyz6lUIy2S17G4TYYJL', // dohlaja
-  // Authorization: 'Bearer _wZRVQG21nv9Ww1X6ABY',
-};
-
-export interface IFilterPagination {
-  docs: string[];
-  limit: number;
-  offset: number;
-  page: number;
-  pages: number;
-  total: number;
-}
-
-export async function getAllCharactersFilters(
-  value: string,
-  limit = 50,
-  page = 1,
-  sort = 'asc',
-  sortby = 'name'
-): Promise<IFilterPagination> {
-  const rawCharacters = await axios.get<IFilterPagination>(charactersUrl, {
-    headers: headers,
-    params: {
-      name: `/${value}/i`,
-      sort: `${sortby}:${sort}`,
-      limit,
-      page,
-    },
-  });
-  return rawCharacters.data;
-}
-
-export async function getAllQuotes(): Promise<string[]> {
-  const rawQuotes = await axios.get(quotesUrl, { headers: headers });
-  return rawQuotes.data.docs;
-}
- */

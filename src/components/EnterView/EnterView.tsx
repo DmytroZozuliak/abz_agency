@@ -1,7 +1,11 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import classes from './EnterView.module.scss';
 
-const EnterView = () => {
+interface IProps {
+  scrollToPostRequestElem: () => void;
+}
+
+const EnterView = ({ scrollToPostRequestElem }: IProps) => {
   return (
     <Box className={classes.container}>
       <Box className={classes.typography}>
@@ -14,7 +18,7 @@ const EnterView = () => {
           interfaces with accessibility in mind. They should also be excited to learn, as the world
           of Front-End Development keeps evolving.
         </Typography>
-        <Button variant="contained" color="primary" onClick={() => console.log('Sign up')}>
+        <Button variant="contained" color="primary" onClick={scrollToPostRequestElem}>
           Sign up
         </Button>
       </Box>

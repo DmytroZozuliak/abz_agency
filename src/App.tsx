@@ -1,18 +1,37 @@
 import { ThemeProvider } from '@emotion/react';
 import { Box, CssBaseline } from '@mui/material';
+import { useRef } from 'react';
 import CardsUsers from './components/CardsUsers';
 import EnterView from './components/EnterView';
 import Header from './components/Header';
-import { lightTheme } from './theme/theme';
+import PostRequest from './components/PostRequest';
+import { theme } from './theme/theme';
 
 function App() {
+  const getRequestElement = useRef<HTMLDivElement>(null);
+  const postRequestElement = useRef<HTMLDivElement>(null);
+
+  const scrollToGetRequestElem = () => {
+    getRequestElement.current &&
+      getRequestElement.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const scrollToPostRequestElem = () => {
+    postRequestElement.current &&
+      postRequestElement.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header />
+      <Header
+        scrollToGetRequestElem={scrollToGetRequestElem}
+        scrollToPostRequestElem={scrollToPostRequestElem}
+      />
       <Box component="main">
-        <EnterView />
-        <CardsUsers />
+        <EnterView scrollToPostRequestElem={scrollToPostRequestElem} />
+        <CardsUsers ref={getRequestElement} />
+        <PostRequest ref={postRequestElement} />
       </Box>
     </ThemeProvider>
   );
