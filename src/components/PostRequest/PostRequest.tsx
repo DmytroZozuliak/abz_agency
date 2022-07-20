@@ -17,10 +17,11 @@ import {
   Typography,
 } from '@mui/material';
 import { Container } from '@mui/system';
+import axios from 'axios';
 import { Field, useFormik } from 'formik';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
-import { fetchPositions } from '../../store/ActionCreators/ActionCreators';
+import { fetchPositions, fetchUsers, postForm } from '../../store/ActionCreators/ActionCreators';
 import validationSchema from '../../utils/validationScema';
 import classes from './PostRequest.module.scss';
 
@@ -31,11 +32,12 @@ export interface IInitialFormValues {
   email: string;
   phone: string;
   file: null;
+  position: string;
 }
 const uploadFileText = 'Upload your photo';
 
 const PostRequest = forwardRef<HTMLDivElement>((props, ref) => {
-  const { isLoadingPositions, errorPositions, positions } = useTypedSelector(
+  const { isLoadingPositions, errorPositions, positions, token } = useTypedSelector(
     (state) => state.apiSlice
   );
   const dispatch = useTypedDispatch();
@@ -62,18 +64,20 @@ const PostRequest = forwardRef<HTMLDivElement>((props, ref) => {
 
   async function handleSubmit(values: IInitialFormValues) {
     console.log('values', values);
-    /*
-    email: "dmytro.zozuliak@gmail.com"
-    file: File {name: '12 002.jpg', lastModified: 1432849294000, lastModifiedDate: Fri May 29 2015 00:41:34 GMT+0300 (за східноєвропейським літнім часом), webkitRelativePath: '', size: 327686, …}
-    name: "Дмитро"
-    phone: "380960564330"
-    position: "3"
-    */
 
-    // const signInData = {
-    //   login: values.login,
-    //   password: values.password,
-    // };
+    const formData = new FormData(); // file from input type='file'
+    formData.append('position_id', values.position);
+    formData.append('name', values.name);
+    formData.append('email', values.email);
+    formData.append('phone', values.phone);
+    formData.append('photo', values.file as unknown as File);
+
+    const postOptions = {
+      formData,
+      token,
+    };
+
+    await dispatch(postForm(postOptions));
 
     // try {
 
@@ -87,8 +91,11 @@ const PostRequest = forwardRef<HTMLDivElement>((props, ref) => {
     // } catch (e) {}
     formik.resetForm();
     setFileName(uploadFileText);
-    // dispatch(fetchUsers(1));
+
+    await dispatch(fetchUsers(1));
   }
+
+  const fileRef = useRef<HTMLInputElement>(null);
 
   return (
     <Container maxWidth="lg">

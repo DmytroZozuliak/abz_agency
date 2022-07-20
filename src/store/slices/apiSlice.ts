@@ -7,6 +7,9 @@ import {
   fetchPositions,
   IPosition,
   IPositions,
+  IToken,
+  getToken,
+  postForm,
 } from '../ActionCreators/ActionCreators';
 
 export interface IApiPage {
@@ -18,6 +21,7 @@ export interface IApiPage {
   positions: IPosition[];
   isLoadingPositions: boolean;
   errorPositions: string | null;
+  token: string;
 }
 
 const initialState: IApiPage = {
@@ -29,6 +33,7 @@ const initialState: IApiPage = {
   positions: [],
   isLoadingPositions: false,
   errorPositions: null,
+  token: localStorage.getItem('token_ABZ') || '',
 };
 
 const apiSlice = createSlice({
@@ -92,6 +97,17 @@ const apiSlice = createSlice({
       state.errorPositions = action.payload;
       state.isLoadingPositions = false;
     },
+    [getToken.fulfilled.type]: (state, action: PayloadAction<IToken>) => {
+      localStorage.setItem('token_ABZ', action.payload.token);
+      state.token = action.payload.token;
+    },
+    // [postForm.fulfilled.type]: (state, action: PayloadAction<number>) => {
+    //   if (action.payload === 401) {
+    // token expired
+    // }
+    // localStorage.setItem('token_ABZ', action.payload.token);
+    // state.token = action.payload.token;
+    // },
   },
 });
 
