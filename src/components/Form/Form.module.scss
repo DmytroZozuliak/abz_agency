@@ -1,24 +1,29 @@
-.input {
-  min-height: 80px;
-  width: 70%;
-  margin-bottom: 10px !important;
-
-  & p {
-    text-transform: none;
-  }
-
-  & > div {
-    padding: 0 !important;
-  }
-}
-
 .boxWrapper {
   display: flex;
   flex-direction: column;
   width: 380px;
+}
 
+.input {
+  min-height: 80px;
+  margin-bottom: 24px;
 
-  &.buttonsWrapper {
-    width: 70%;
+  & p {
+    text-transform: none;
+  }
+}
+
+.upload {
+  display: flex;
+  padding-bottom: 50px;
+
+  label {
+    padding: 14px 15px;
+    cursor: pointer;
+  }
+
+  div {
+    padding: 14px 16px;
+    width: 100%;
   }
 }

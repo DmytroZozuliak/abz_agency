@@ -25,6 +25,9 @@ export const themeOptions: ThemeOptions = {
       main: primaryColor,
       contrastText: fontColor,
     },
+    text: {
+      secondary: secondaryFontColor,
+    },
     secondary: {
       main: secondaryColor,
       contrastText: secondaryFontColor,
@@ -59,33 +62,6 @@ export const themeOptions: ThemeOptions = {
     },
   },
   components: {
-    MuiMenuItem: {
-      styleOverrides: {
-        root: ({ ownerState }) => ({
-          ...(ownerState.className === 'color-picker-search' && {
-            '&.Mui-selected': {
-              display: 'none',
-            },
-          }),
-        }),
-      },
-    },
-    MuiContainer: {
-      styleOverrides: {
-        root: ({ ownerState }) => ({
-          ...(ownerState.className === 'footer-container' && {
-            backgroundColor: primaryColor,
-          }),
-        }),
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        colorPrimary: {
-          backgroundColor: primaryColor,
-        },
-      },
-    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -123,6 +99,22 @@ export const themeOptions: ThemeOptions = {
           ':last-child': {
             paddingBottom: '20px',
           },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          minHeight: '80px',
+          marginBottom: '24px',
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          fontSize: '12px',
+          lineHeight: '14px',
         },
       },
     },

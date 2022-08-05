@@ -1,5 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import {
+  Box,
   CircularProgress,
   FormControl,
   FormControlLabel,
@@ -129,9 +130,7 @@ const Form = () => {
       <TextField
         fullWidth
         className={classes.input}
-        classes={{
-          root: classes.label,
-        }}
+        sx={{ marginBottom: '17px' }}
         id="phone"
         name="phone"
         label="Phone"
@@ -141,8 +140,12 @@ const Form = () => {
         helperText={(formik.touched.phone && formik.errors.phone) || '+38 (XXX) XXX - XX - XX'}
       />
 
-      <FormControl>
-        <Typography>Select your position</Typography>
+      <FormControl
+        sx={{
+          paddingBottom: '40px',
+        }}
+      >
+        <Typography mb="10px">Select your position</Typography>
         {isLoadingPositions && <CircularProgress />}
         {positions && (
           <>
@@ -151,52 +154,106 @@ const Form = () => {
               name="position"
               value={formik.values.position}
               onChange={formik.handleChange}
+              className={classes.radios}
             >
               {positions.map((position) => (
                 <FormControlLabel
                   key={position.id}
                   value={position.id}
-                  control={<Radio color="secondary" />}
+                  sx={{
+                    marginLeft: 0,
+                    marginBottom: '7px',
+                  }}
+                  control={
+                    <Radio
+                      color="secondary"
+                      sx={{
+                        padding: 0,
+                        paddingRight: '12px',
+                        '& .MuiSvgIcon-root': {
+                          fontSize: '21px',
+                        },
+                      }}
+                    />
+                  }
                   label={position.name}
                 />
               ))}
             </RadioGroup>
             {formik.touched.position && formik.errors.position && (
-              <FormHelperText error={true}>{formik.errors.position}</FormHelperText>
+              <FormHelperText
+                sx={{
+                  position: 'absolute',
+                  left: 0,
+                  bottom: '28px',
+                }}
+                error={true}
+              >
+                {formik.errors.position}
+              </FormHelperText>
             )}
           </>
         )}
       </FormControl>
 
-      <input
-        id="fileUpload"
-        type="file"
-        onChange={(e) => {
-          e.target.files && e.target.files[0]
-            ? setFileName(e.target.files[0].name)
-            : setFileName(uploadFileText);
-          formik.setFieldValue('file', e.target.files && e.target.files[0]);
-        }}
-        accept="image/*"
-        hidden
-        onBlur={formik.handleBlur}
-      />
-      <label htmlFor="fileUpload">Upload File</label>
-      <span>{fileName}</span>
+      <FormControl>
+        <input
+          id="fileUpload"
+          type="file"
+          onChange={(e) => {
+            e.target.files && e.target.files[0]
+              ? setFileName(e.target.files[0].name)
+              : setFileName(uploadFileText);
+            formik.setFieldValue('file', e.target.files && e.target.files[0]);
+          }}
+          accept="image/*"
+          hidden
+          onBlur={formik.handleBlur}
+        />
+        <Box className={classes.upload}>
+          <Box
+            component="label"
+            htmlFor="fileUpload"
+            sx={{
+              border: 1,
+              borderColor: 'text.main',
+            }}
+          >
+            Upload
+          </Box>
+          <Box
+            sx={{
+              border: 1,
+              borderLeft: 0,
+              borderColor: 'text.secondary',
+              color: 'text.secondary',
+            }}
+          >
+            {fileName}
+          </Box>
+        </Box>
 
-      {formik.touched.file && Boolean(formik.errors.file) ? (
-        <FormHelperText id="file-helper-text" error={true}>
-          {formik.errors.file}
-        </FormHelperText>
-      ) : null}
+        {formik.touched.file && Boolean(formik.errors.file) ? (
+          <FormHelperText
+            id="file-helper-text"
+            error={true}
+            sx={{
+              position: 'absolute',
+              left: 0,
+              bottom: '28px',
+            }}
+          >
+            {formik.errors.file}
+          </FormHelperText>
+        ) : null}
+      </FormControl>
 
       <LoadingButton
         type="submit"
         variant="contained"
         color="primary"
-        sx={{ width: '120px' }}
+        sx={{ width: '100px', height: '34px', alignSelf: 'center' }}
         disabled={!formik.dirty}
-        // loading={isLoading}
       >
         Sign up
       </LoadingButton>
