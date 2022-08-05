@@ -9,21 +9,19 @@ interface IProps {
 
 const Header = ({ scrollToGetRequestElem, scrollToPostRequestElem }: IProps) => {
   return (
-    <header>
-      <Container maxWidth="lg">
-        <Box className={classes.header}>
-          <img src="../assets/Logo.svg" alt="logo" />
-          <Box className={classes.buttons}>
-            <Button variant="contained" color="primary" onClick={scrollToGetRequestElem}>
-              Users
-            </Button>
-            <Button variant="contained" color="primary" onClick={scrollToPostRequestElem}>
-              Sign up
-            </Button>
-          </Box>
+    <Box component="header" className="container">
+      <Box className={classes.header}>
+        <img src="../assets/Logo.svg" alt="logo" />
+        <Box className={classes.buttons}>
+          <Button variant="contained" color="primary" onClick={scrollToGetRequestElem}>
+            Users
+          </Button>
+          <Button variant="contained" color="primary" onClick={scrollToPostRequestElem}>
+            Sign up
+          </Button>
         </Box>
-      </Container>
-    </header>
+      </Box>
+    </Box>
   );
 };
 

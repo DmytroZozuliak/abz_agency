@@ -28,7 +28,7 @@ const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
   }, []);
 
   return (
-    <Container maxWidth="lg">
+    <Box component="section" className="container">
       <Box ref={ref} className={classes.container}>
         <Typography variant="h1" component="h2" marginBottom="50px">
           Working with GET request
@@ -38,7 +38,7 @@ const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
         {error && <div>{error}</div>}
         <Grid
           container
-          spacing={{ xs: 1, md: 3 }}
+          spacing={{ xs: 1, md: 3, lg: '29px' }}
           columns={{ xs: 4, sm: 8, md: 12 }}
           my="50px"
           justifyContent="space-between"
@@ -53,12 +53,12 @@ const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
           variant="contained"
           color="primary"
           ref={moreButton}
-          sx={{ width: '120px' }}
+          sx={{ width: '120px', textTransform: 'initial' }}
         >
           Show more
         </Button>
       </Box>
-    </Container>
+    </Box>
   );
 });
 

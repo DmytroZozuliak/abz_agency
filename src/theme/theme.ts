@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { ThemeOptions, createTheme } from '@mui/material';
 
 const primaryColor = '#F4E041';
@@ -6,8 +5,16 @@ const secondaryColor = '#00BDD3';
 const fontColor = '#000000';
 const secondaryFontColor = '#7E7E7E';
 
-
 export const themeOptions: ThemeOptions = {
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 704,
+      lg: 1170,
+      xl: 1536,
+    },
+  },
   palette: {
     mode: 'light',
     background: {
@@ -40,9 +47,7 @@ export const themeOptions: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: [
-      'Nunito', 'sans-serif',
-    ].join(','),
+    fontFamily: ['Nunito', 'sans-serif'].join(','),
     h1: {
       fontSize: '40px',
       lineHeight: '40px',
@@ -54,7 +59,6 @@ export const themeOptions: ThemeOptions = {
     },
   },
   components: {
-
     MuiMenuItem: {
       styleOverrides: {
         root: ({ ownerState }) => ({
@@ -100,7 +104,7 @@ export const themeOptions: ThemeOptions = {
             color: '#fff',
             boxShadow: 'none',
           },
-        }
+        },
       },
     },
     MuiPaper: {

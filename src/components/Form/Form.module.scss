@@ -1,0 +1,24 @@
+.input {
+  min-height: 80px;
+  width: 70%;
+  margin-bottom: 10px !important;
+
+  & p {
+    text-transform: none;
+  }
+
+  & > div {
+    padding: 0 !important;
+  }
+}
+
+.boxWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+
+
+  &.buttonsWrapper {
+    width: 70%;
+  }
+}

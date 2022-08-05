@@ -7,7 +7,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.container {
+  box-sizing: content-box;
+  max-width: 1170px;
+  padding-left: 60px;
+  padding-right: 60px;
+  margin: 0px auto;
+
+  @media (max-width: 1024px){
+    padding-left: 60px;
+    padding-right: 60px;
+  };
+
+  @media (max-width: 768px){
+    padding-left: 32px;
+    padding-right: 32px;
+  };
+
+  @media (max-width: 400px){
+    padding-left: 16px;
+    padding-right: 16px;
+  };
 }

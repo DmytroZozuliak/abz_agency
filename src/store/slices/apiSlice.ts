@@ -9,7 +9,6 @@ import {
   IPositions,
   IToken,
   getToken,
-  postForm,
 } from '../ActionCreators/ActionCreators';
 
 export interface IApiPage {
@@ -101,13 +100,6 @@ const apiSlice = createSlice({
       localStorage.setItem('token_ABZ', action.payload.token);
       state.token = action.payload.token;
     },
-    // [postForm.fulfilled.type]: (state, action: PayloadAction<number>) => {
-    //   if (action.payload === 401) {
-    // token expired
-    // }
-    // localStorage.setItem('token_ABZ', action.payload.token);
-    // state.token = action.payload.token;
-    // },
   },
 });
 

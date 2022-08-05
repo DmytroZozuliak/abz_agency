@@ -2,6 +2,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { boolean } from 'yup';
+import { openErrorSnack, openSuccessSnack } from '../slices/snackSlice';
 
 interface IQueries {
   page: number;
@@ -50,7 +51,7 @@ export interface IToken {
 // https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=5
 //  https://frontend-test-assignment-api.abz.agency/api/v1/positions
 export const baseUrl = ' https://frontend-test-assignment-api.abz.agency/api/v1';
-const usersUrl = `${baseUrl}/users`;
+export const usersUrl = `${baseUrl}/users`;
 const positionsUrl = `${baseUrl}/positions`;
 const tokenUrl = `${baseUrl}/token`;
 
@@ -158,38 +159,3 @@ export interface IPostRequest {
   "user_id": number;
   "message": string;
 }
-
-export const postForm = createAsyncThunk(
-  'api/postForm',
-  async (postObj: IPostObj, thunkAPI) => {
-    try {
-      const postResponse = await axios.post<IPostRequest>(usersUrl, postObj.formData, {
-        headers: {
-          'Token': postObj.token
-        }
-      });
-      return postResponse.data;
-    } catch (err) {
-      const error = err as AxiosError;
-      if (error.response) {
-        if (error.response.status === 401) {
-          // token expired
-          thunkAPI.dispatch(getToken(null))
-          return thunkAPI.rejectWithValue('token expired');
-        }
-        else if (error.response.status === 409) {
-          return thunkAPI.rejectWithValue('User with this phone or email already exist');
-        }
-        else if (error.response.status === 422) {
-          return thunkAPI.rejectWithValue('"Validation failed"');
-        }
-        else {
-          return thunkAPI.rejectWithValue('Could not get data');
-        }
-
-      } else {
-        return thunkAPI.rejectWithValue('Could not get data');
-      }
-    }
-  }
-);

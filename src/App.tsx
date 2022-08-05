@@ -5,9 +5,11 @@ import CardsUsers from './components/CardsUsers';
 import EnterView from './components/EnterView';
 import Header from './components/Header';
 import PostRequest from './components/PostRequest';
+import SnackPopup from './components/SnackPopup';
 import { useTypedDispatch } from './hooks/redux';
 import { getToken } from './store/ActionCreators/ActionCreators';
 import { theme } from './theme/theme';
+import { scrollToElement } from './utils/helpers';
 
 function App() {
   const getRequestElement = useRef<HTMLDivElement>(null);
@@ -17,29 +19,21 @@ function App() {
 
   useEffect(() => {
     dispatch(getToken(null));
-  }, []);
-
-  const scrollToGetRequestElem = () => {
-    getRequestElement.current &&
-      getRequestElement.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-  const scrollToPostRequestElem = () => {
-    postRequestElement.current &&
-      postRequestElement.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header
-        scrollToGetRequestElem={scrollToGetRequestElem}
-        scrollToPostRequestElem={scrollToPostRequestElem}
+        scrollToGetRequestElem={() => scrollToElement(getRequestElement.current)}
+        scrollToPostRequestElem={() => scrollToElement(postRequestElement.current)}
       />
       <Box component="main">
-        <EnterView scrollToPostRequestElem={scrollToPostRequestElem} />
+        <EnterView scrollToPostRequestElem={() => scrollToElement(postRequestElement.current)} />
         <CardsUsers ref={getRequestElement} />
         <PostRequest ref={postRequestElement} />
       </Box>
+      <SnackPopup />
     </ThemeProvider>
   );
 }

@@ -6,29 +6,3 @@
   margin-top: 140px;
   margin-bottom: 100px;
 }
-
-.input {
-  min-height: 80px;
-  width: 70%;
-  margin-bottom: 10px !important;
-
-  & p {
-    text-transform: none;
-  }
-
-  & > div {
-    padding: 0 !important;
-  }
-}
-
-.boxWrapper {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-
-  &.buttonsWrapper {
-    width: 70%;
-  }
-}
