@@ -5,7 +5,7 @@ import classes from './PostRequest.module.scss';
 
 const PostRequest = forwardRef<HTMLDivElement>((props, ref) => {
   return (
-    <Box ref={ref} className={classes.container}>
+    <Box ref={ref} component="section" className={`container ${classes.container}`}>
       <Typography id="post-request" variant="h1" component="h2" marginBottom="50px">
         Working with POST request
       </Typography>

@@ -10,7 +10,7 @@ export const themeOptions: ThemeOptions = {
     values: {
       xs: 0,
       sm: 600,
-      md: 704,
+      md: 768,
       lg: 1170,
       xl: 1536,
     },
@@ -18,7 +18,7 @@ export const themeOptions: ThemeOptions = {
   palette: {
     mode: 'light',
     background: {
-      paper: '#e3e3e3',
+      paper: '#fff',
       default: '#F8F8F8',
     },
     primary: {
@@ -67,7 +67,7 @@ export const themeOptions: ThemeOptions = {
         root: {
           width: '100px',
           height: '34px',
-          textTransform: 'capitalize',
+          textTransform: 'initial',
           borderRadius: '80px',
           boxShadow: 'none',
           color: fontColor,

@@ -38,8 +38,7 @@ const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
         {error && <div>{error}</div>}
         <Grid
           container
-          spacing={{ xs: 1, md: 3, lg: '29px' }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
+          spacing={{ xs: '20px', md: '16px', lg: '29px' }}
           my="50px"
           justifyContent="space-between"
           alignItems="center"
@@ -53,7 +52,7 @@ const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
           variant="contained"
           color="primary"
           ref={moreButton}
-          sx={{ width: '120px', textTransform: 'initial' }}
+          sx={{ width: '120px' }}
         >
           Show more
         </Button>

@@ -9,7 +9,7 @@ interface IProps {
 const EnterView = ({ scrollToPostRequestElem }: IProps) => {
   return (
     <Container component="section" disableGutters maxWidth="lg">
-      <Box className={classes.container}>
+      <Box className={classes.container} sx={{ height: { xs: '500px', md: '650px' } }}>
         <Box className={classes.typography}>
           <Typography variant="h1" color="white" textAlign="center">
             Test assignment for front-end developer
