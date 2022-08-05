@@ -28,8 +28,12 @@ const CardUser = ({ user }: { user: IUser }) => {
     <Grid item xs={12} sm={6} md={4}>
       <Card
         sx={{
-          maxWidth: { xs: '100%', sm: '344px', md: '282px', lg: '370px' },
-          height: '100%',
+          maxWidth: {
+            xs: '100%',
+            sm: '344px',
+            md: '282px',
+            lg: '370px',
+          },
         }}
       >
         <CardContent className={classes.content}>

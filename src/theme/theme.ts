@@ -10,7 +10,7 @@ export const themeOptions: ThemeOptions = {
     values: {
       xs: 0,
       sm: 600,
-      md: 768,
+      md: 768.9,
       lg: 1170,
       xl: 1536,
     },

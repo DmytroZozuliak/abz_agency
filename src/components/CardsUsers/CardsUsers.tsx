@@ -38,7 +38,7 @@ const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
         {error && <div>{error}</div>}
         <Grid
           container
-          spacing={{ xs: '20px', md: '16px', lg: '29px' }}
+          spacing={{ xs: '20px', sm: '16px', md: '29px', lg: '29px' }}
           my="50px"
           justifyContent="space-between"
           alignItems="center"
