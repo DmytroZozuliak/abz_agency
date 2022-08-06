@@ -1,7 +1,7 @@
 import { ThemeOptions, createTheme } from '@mui/material';
 
 const primaryColor = '#F4E041';
-const secondaryColor = '#00BDD3';
+const secondaryColor = '#7E7E7E';
 const fontColor = '#000000';
 const secondaryFontColor = '#7E7E7E';
 

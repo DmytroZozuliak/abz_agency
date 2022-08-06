@@ -100,8 +100,8 @@ const Form = () => {
   return (
     <form className={classes.boxWrapper} onSubmit={formik.handleSubmit}>
       <TextField
+        color="secondary"
         fullWidth
-        className={classes.input}
         classes={{
           root: classes.label,
         }}
@@ -115,7 +115,7 @@ const Form = () => {
       />
       <TextField
         fullWidth
-        className={classes.input}
+        color="secondary"
         classes={{
           root: classes.label,
         }}
@@ -129,8 +129,8 @@ const Form = () => {
       />
       <TextField
         fullWidth
-        className={classes.input}
         sx={{ marginBottom: '17px' }}
+        color="secondary"
         id="phone"
         name="phone"
         label="Phone"
@@ -215,25 +215,29 @@ const Form = () => {
             component="label"
             htmlFor="fileUpload"
             sx={{
-              border: 1,
-              borderColor: 'text.main',
+              border: formik.touched.file && Boolean(formik.errors.file) ? 2 : 1,
+              borderColor:
+                formik.touched.file && Boolean(formik.errors.file) ? 'error.main' : 'text.main',
             }}
           >
             Upload
           </Box>
           <Box
             sx={{
-              border: 1,
+              border: formik.touched.file && Boolean(formik.errors.file) ? 2 : 1,
               borderLeft: 0,
-              borderColor: 'text.secondary',
-              color: 'text.secondary',
+              borderColor:
+                formik.touched.file && Boolean(formik.errors.file)
+                  ? 'error.main'
+                  : 'text.secondary',
+              color: uploadFileText === fileName ? 'text.secondary' : 'text.main',
             }}
           >
             {fileName}
           </Box>
         </Box>
 
-        {formik.touched.file && Boolean(formik.errors.file) ? (
+        {formik.touched.file && Boolean(formik.errors.file) && (
           <FormHelperText
             id="file-helper-text"
             error={true}
@@ -245,7 +249,7 @@ const Form = () => {
           >
             {formik.errors.file}
           </FormHelperText>
-        ) : null}
+        )}
       </FormControl>
 
       <LoadingButton
