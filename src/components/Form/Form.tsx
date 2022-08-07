@@ -215,17 +215,21 @@ const Form = () => {
             component="label"
             htmlFor="fileUpload"
             sx={{
-              border: formik.touched.file && Boolean(formik.errors.file) ? 2 : 1,
+              border: 1,
               borderColor:
                 formik.touched.file && Boolean(formik.errors.file) ? 'error.main' : 'text.main',
+              borderTopLeftRadius: '4px',
+              borderBottomLeftRadius: '4px',
             }}
           >
             Upload
           </Box>
           <Box
             sx={{
-              border: formik.touched.file && Boolean(formik.errors.file) ? 2 : 1,
+              border: 1,
               borderLeft: 0,
+              borderTopRightRadius: '4px',
+              borderBottomRightRadius: '4px',
               borderColor:
                 formik.touched.file && Boolean(formik.errors.file)
                   ? 'error.main'
