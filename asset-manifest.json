@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/abz_agency/static/css/main.ef9e54e7.css",
+    "main.js": "/abz_agency/static/js/main.076947f3.js",
+    "static/media/pexels-alexandr-podvalny-1227513.jpeg": "/abz_agency/static/media/pexels-alexandr-podvalny-1227513.be7665f876bbd9138501.jpeg",
+    "index.html": "/abz_agency/index.html",
+    "main.ef9e54e7.css.map": "/abz_agency/static/css/main.ef9e54e7.css.map",
+    "main.076947f3.js.map": "/abz_agency/static/js/main.076947f3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ef9e54e7.css",
+    "static/js/main.076947f3.js"
+  ]
+}
