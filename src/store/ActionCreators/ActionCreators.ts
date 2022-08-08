@@ -1,161 +1,85 @@
-/* eslint-disable prettier/prettier */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import { boolean } from 'yup';
-import { openErrorSnack, openSuccessSnack } from '../slices/snackSlice';
+import { IUsers, IPositions, IToken, IPostRequest, IErrorData } from '../../interfaces/interfaces';
+import { RootState } from '../store';
 
-interface IQueries {
-  page: number;
-  count: number;
-}
-
-export interface IUsers {
-  count: number;
-  links: {
-    next_url: null | string;
-    prev_url: null | string;
-  };
-  page: number;
-  success: boolean;
-  total_pages: number;
-  total_users: number;
-  users: IUser[];
-}
-
-export interface IUser {
-  email: string;
-  id: number;
-  name: string;
-  phone: string;
-  photo: string;
-  position: string;
-  position_id: number;
-  registration_timestamp: number;
-}
-
-export interface IPositions {
-  "success": boolean;
-  "positions": IPosition[];
-}
-
-export interface IPosition {
-  "id": number;
-  "name": string;
-}
-
-export interface IToken {
-  "success": boolean;
-  "token": string;
-}
-
-// https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=5
-//  https://frontend-test-assignment-api.abz.agency/api/v1/positions
 export const baseUrl = ' https://frontend-test-assignment-api.abz.agency/api/v1';
 export const usersUrl = `${baseUrl}/users`;
 const positionsUrl = `${baseUrl}/positions`;
 const tokenUrl = `${baseUrl}/token`;
 
-const headers = {
-  Accept: 'application/json',
-  Authorization: 'Bearer QCWRYhej4z3WGyy1CTGg', // dmytro
-};
-
-export const fetchUsers = createAsyncThunk(
-  'api/fetchUsers',
-  async (page: number, thunkAPI) => {
-    try {
-      const usersResponse = await axios.get<IUsers>(usersUrl, {
-        params: {
-          page,
-          count: 6,
-        },
-      });
-      return usersResponse.data;
-    } catch (err) {
-      const error = err as AxiosError;
-      if (error.response) {
-        if (error.response.status === 429) {
-          return thunkAPI.rejectWithValue('Too many requests');
-        } else {
-          return thunkAPI.rejectWithValue('Could not get data');
-        }
-      } else {
-        return thunkAPI.rejectWithValue('Could not get data');
-      }
-    }
+export const fetchUsers = createAsyncThunk('api/fetchUsers', async (page: number, thunkAPI) => {
+  try {
+    const usersResponse = await axios.get<IUsers>(usersUrl, {
+      params: {
+        page,
+        count: 6,
+      },
+    });
+    return usersResponse.data;
+  } catch (err) {
+    return thunkAPI.rejectWithValue('Could not get data');
   }
-);
+});
 
 export const fetchMoreUsers = createAsyncThunk(
   'api/fetchMoreUsers',
   async (url: string, thunkAPI) => {
     try {
-      const usersResponse = await axios.get<IUsers>(url)
+      const usersResponse = await axios.get<IUsers>(url);
       return usersResponse.data;
     } catch (err) {
-      const error = err as AxiosError;
-      if (error.response) {
-        if (error.response.status === 429) {
-          return thunkAPI.rejectWithValue('Too many requests');
-        } else {
-          return thunkAPI.rejectWithValue('Could not get data');
-        }
-      } else {
-        return thunkAPI.rejectWithValue('Could not get data');
-      }
+      return thunkAPI.rejectWithValue('Could not get data');
     }
   }
 );
 
-export const fetchPositions = createAsyncThunk(
-  'api/fetchPositions',
-  async (_: null, thunkAPI) => {
+export const fetchPositions = createAsyncThunk('api/fetchPositions', async (_: null, thunkAPI) => {
+  try {
+    const positionsResponse = await axios.get<IPositions>(positionsUrl);
+    return positionsResponse.data;
+  } catch (err) {
+    return thunkAPI.rejectWithValue('Could not get data');
+  }
+});
+
+export const getToken = createAsyncThunk('api/getToken', async (_: null, thunkAPI) => {
+  try {
+    const tokenResponse = await axios.get<IToken>(tokenUrl);
+    return tokenResponse.data;
+  } catch (err) {
+    return thunkAPI.rejectWithValue('Could not get data');
+  }
+});
+
+export const postUser = createAsyncThunk(
+  'api/postUser',
+  async (body: FormData, { getState, rejectWithValue, dispatch }) => {
+    const globalState = getState() as RootState;
+
     try {
-      const positionsResponse = await axios.get<IPositions>(positionsUrl);
-      return positionsResponse.data;
+      const response = await axios.post<IPostRequest>(usersUrl, body, {
+        headers: {
+          Token: globalState.users.token,
+        },
+      });
+      return response.data;
     } catch (err) {
       const error = err as AxiosError;
+      let message: string | undefined;
       if (error.response) {
-        if (error.response.status === 429) {
-          return thunkAPI.rejectWithValue('Too many requests');
-        } else {
-          return thunkAPI.rejectWithValue('Could not get data');
+        const responseData = error.response.data as IErrorData;
+        if (error.response.status === 401) {
+          dispatch(getToken(null));
+          message = responseData.message;
+        } else if (error.response.status === 409) {
+          message = responseData.message;
+        } else if (error.response.status === 422) {
+          message = responseData.message;
         }
-      } else {
-        return thunkAPI.rejectWithValue('Could not get data');
       }
+
+      return rejectWithValue(message || 'Could not get data');
     }
   }
 );
-
-export const getToken = createAsyncThunk(
-  'api/getToken',
-  async (_: null, thunkAPI) => {
-    try {
-      const tokenResponse = await axios.get<IToken>(tokenUrl);
-      return tokenResponse.data;
-    } catch (err) {
-      const error = err as AxiosError;
-      if (error.response) {
-        if (error.response.status === 429) {
-          return thunkAPI.rejectWithValue('Too many requests');
-        } else {
-          return thunkAPI.rejectWithValue('Could not get data');
-        }
-      } else {
-        return thunkAPI.rejectWithValue('Could not get data');
-      }
-    }
-  }
-);
-
-export interface IPostObj {
-  formData: FormData;
-  token: string;
-}
-
-export interface IPostRequest {
-  "success": boolean;
-  "user_id": number;
-  "message": string;
-}

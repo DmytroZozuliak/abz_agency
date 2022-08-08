@@ -1,48 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  fetchUsers,
-  fetchMoreUsers,
-  IUser,
-  IUsers,
-  fetchPositions,
-  IPosition,
-  IPositions,
-  IToken,
-  getToken,
-} from '../ActionCreators/ActionCreators';
+import { IUser, IUsers, IToken } from '../../interfaces/interfaces';
+import { fetchUsers, fetchMoreUsers, getToken } from '../ActionCreators/ActionCreators';
 
-export interface IApiPage {
+export interface IUsersApi {
   isLoading: boolean;
   error: string | null;
   users: IUser[];
   linkNext: string | null;
   buttonDisable: boolean;
-  positions: IPosition[];
-  isLoadingPositions: boolean;
-  errorPositions: string | null;
   token: string;
 }
 
-const initialState: IApiPage = {
+const initialState: IUsersApi = {
   isLoading: false,
   error: null,
   users: [],
   linkNext: null,
   buttonDisable: true,
-  positions: [],
-  isLoadingPositions: false,
-  errorPositions: null,
   token: localStorage.getItem('token_ABZ') || '',
 };
 
-const apiSlice = createSlice({
+const usersSlice = createSlice({
   name: 'api',
   initialState,
-  reducers: {
-    apiChangeSearch(state, action: PayloadAction<string>) {
-      state.error = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUsers>) => {
       const nextLinkUsers = action.payload.links.next_url;
@@ -84,18 +65,6 @@ const apiSlice = createSlice({
       state.isLoading = false;
       state.buttonDisable = true;
     },
-    [fetchPositions.fulfilled.type]: (state, action: PayloadAction<IPositions>) => {
-      state.positions = action.payload.positions;
-      state.isLoadingPositions = false;
-      state.errorPositions = null;
-    },
-    [fetchPositions.pending.type]: (state) => {
-      state.isLoadingPositions = true;
-    },
-    [fetchPositions.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.errorPositions = action.payload;
-      state.isLoadingPositions = false;
-    },
     [getToken.fulfilled.type]: (state, action: PayloadAction<IToken>) => {
       localStorage.setItem('token_ABZ', action.payload.token);
       state.token = action.payload.token;
@@ -103,6 +72,4 @@ const apiSlice = createSlice({
   },
 });
 
-export const { apiChangeSearch } = apiSlice.actions;
-
-export default apiSlice.reducer;
+export default usersSlice.reducer;

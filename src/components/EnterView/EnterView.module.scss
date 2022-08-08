@@ -1,29 +1,27 @@
-.container{
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../../public/assets/pexels-alexandr-podvalny-1227513.jpeg') -1315px -1621px/auto auto  no-repeat;
+.container {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../assets/pexels-alexandr-podvalny-1227513.jpeg') -1315px -1621px/auto auto no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 360px){
-  align-items: flex-start;
+  @media (max-width: 360px) {
+    align-items: flex-start;
   };
 }
 
-.typography{
+.typography {
   max-width: 380px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  @media (max-width: 500px){
+  @media (max-width: 500px) {
     max-width: 100%;
     padding-right: 16px;
     padding-left: 16px;
   };
 
-  @media (max-width: 360px){
-
+  @media (max-width: 360px) {
     margin-top: 40px;
-
-    };
+  };
 }

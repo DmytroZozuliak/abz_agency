@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import apiSlice from './slices/apiSlice';
+import userSlice from './slices/usersSlice';
 import snackSlice from './slices/snackSlice';
+import positionsSlice from './slices/positionsSlice';
 
 const rootReducer = combineReducers({
-  apiSlice,
+  users: userSlice,
+  positions: positionsSlice,
   snack: snackSlice,
 });
 

@@ -18,8 +18,9 @@ function App() {
   const dispatch = useTypedDispatch();
 
   useEffect(() => {
+    console.log('App render effect');
     dispatch(getToken(null));
-  }, [dispatch]);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

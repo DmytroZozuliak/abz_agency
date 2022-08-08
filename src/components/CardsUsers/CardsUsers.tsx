@@ -1,5 +1,4 @@
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
-import { Container } from '@mui/system';
 import { forwardRef, useEffect, useRef } from 'react';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import { fetchMoreUsers, fetchUsers } from '../../store/ActionCreators/ActionCreators';
@@ -8,7 +7,7 @@ import classes from './CardsUsers.module.scss';
 
 const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
   const { isLoading, error, users, linkNext, buttonDisable } = useTypedSelector(
-    (state) => state.apiSlice
+    (state) => state.users
   );
   const dispatch = useTypedDispatch();
   const moreButton = useRef<null | HTMLButtonElement>(null);
@@ -43,7 +42,7 @@ const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          {users && users.map((user) => <CardUser key={user.id} user={user} />)}
+          {users && users.map((user) => <CardUser key={user.registration_timestamp} user={user} />)}
         </Grid>
 
         <Button

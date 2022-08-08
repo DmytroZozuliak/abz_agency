@@ -10,39 +10,28 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import axios, { AxiosError } from 'axios';
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
-import {
-  fetchPositions,
-  fetchUsers,
-  getToken,
-  IPostRequest,
-  usersUrl,
-} from '../../store/ActionCreators/ActionCreators';
+import { IInitialFormValues } from '../../interfaces/interfaces';
+import { fetchPositions, fetchUsers, postUser } from '../../store/ActionCreators/ActionCreators';
 import { openErrorSnack, openSuccessSnack } from '../../store/slices/snackSlice';
 import validationSchema from '../../utils/validationScema';
 import classes from './Form.module.scss';
 
 export const inputFields = ['name', 'email', 'phone'];
-export interface IInitialFormValues {
-  name: string;
-  email: string;
-  phone: string;
-  file: null;
-  position: string;
-}
+
 const uploadFileText = 'Upload your photo';
 
 const Form = () => {
-  const { isLoadingPositions, positions, token } = useTypedSelector((state) => state.apiSlice);
+  const { isLoadingPositions, positions } = useTypedSelector((state) => state.positions);
   const dispatch = useTypedDispatch();
 
+  // todo
   const initialValues = {
-    name: '',
-    email: '',
-    phone: '',
+    name: 'gfdgdff',
+    email: 'ghhgh@gmail.com',
+    phone: '+380944444334',
     file: null,
     position: '',
   };
@@ -51,7 +40,7 @@ const Form = () => {
 
   useEffect(() => {
     dispatch(fetchPositions(null));
-  }, [dispatch]);
+  }, []);
 
   const formik = useFormik({
     initialValues,
@@ -68,32 +57,14 @@ const Form = () => {
     formData.append('photo', values.file as unknown as File);
 
     try {
-      await axios.post<IPostRequest>(usersUrl, formData, {
-        headers: {
-          Token: token,
-        },
-      });
-      dispatch(openSuccessSnack('User created'));
-
+      const response = await dispatch(postUser(formData)).unwrap();
+      dispatch(openSuccessSnack(response.message));
       formik.resetForm();
       setFileName(uploadFileText);
-
       dispatch(fetchUsers(1));
     } catch (err) {
-      const error = err as AxiosError;
-      if (error.response) {
-        if (error.response.status === 401) {
-          dispatch(getToken(null));
-        } else if (error.response.status === 409) {
-          dispatch(openErrorSnack('User with this phone or email already exist'));
-        } else if (error.response.status === 422) {
-          dispatch(openErrorSnack('Validation failed'));
-        } else {
-          dispatch(openErrorSnack('Could not get data'));
-        }
-      } else {
-        dispatch(openErrorSnack('Could not get data'));
-      }
+      const error = err as string;
+      dispatch(openErrorSnack(error));
     }
   }
 

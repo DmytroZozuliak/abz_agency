@@ -9,7 +9,7 @@ import {
   TooltipProps,
   Typography,
 } from '@mui/material';
-import { IUser } from '../../store/ActionCreators/ActionCreators';
+import { IUser } from '../../interfaces/interfaces';
 import classes from './CardUser.module.scss';
 
 const CardUser = ({ user }: { user: IUser }) => {

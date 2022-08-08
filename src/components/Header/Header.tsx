@@ -1,7 +1,7 @@
-import { Button, Container } from '@mui/material';
+import { Button } from '@mui/material';
 import { Box } from '@mui/system';
 import classes from './Header.module.scss';
-
+import Logo from '../../assets/Logo.svg';
 interface IProps {
   scrollToGetRequestElem: () => void;
   scrollToPostRequestElem: () => void;
@@ -11,7 +11,7 @@ const Header = ({ scrollToGetRequestElem, scrollToPostRequestElem }: IProps) => 
   return (
     <Box component="header" className="container">
       <Box className={classes.header}>
-        <img src="../assets/Logo.svg" alt="logo" />
+        <img src={Logo} alt="logo" />
         <Box className={classes.buttons}>
           <Button variant="contained" color="primary" onClick={scrollToGetRequestElem}>
             Users
