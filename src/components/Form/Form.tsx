@@ -11,10 +11,10 @@ import {
   Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import { IInitialFormValues } from '../../interfaces/interfaces';
-import { fetchPositions, fetchUsers, postUser } from '../../store/ActionCreators/ActionCreators';
+import { fetchUsers, postUser } from '../../store/ActionCreators/ActionCreators';
 import { openErrorSnack, openSuccessSnack } from '../../store/slices/snackSlice';
 import validationSchema from '../../utils/validationScema';
 import classes from './Form.module.scss';
@@ -37,10 +37,6 @@ const Form = () => {
   };
 
   const [fileName, setFileName] = useState(uploadFileText);
-
-  useEffect(() => {
-    dispatch(fetchPositions(null));
-  }, []);
 
   const formik = useFormik({
     initialValues,

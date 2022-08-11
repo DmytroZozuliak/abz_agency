@@ -34,7 +34,7 @@ export const fetchMoreUsers = createAsyncThunk(
   }
 );
 
-export const fetchPositions = createAsyncThunk('api/fetchPositions', async (_: null, thunkAPI) => {
+export const fetchPositions = createAsyncThunk('api/fetchPositions', async (_: void, thunkAPI) => {
   try {
     const positionsResponse = await axios.get<IPositions>(positionsUrl);
     return positionsResponse.data;
@@ -43,7 +43,7 @@ export const fetchPositions = createAsyncThunk('api/fetchPositions', async (_: n
   }
 });
 
-export const getToken = createAsyncThunk('api/getToken', async (_: null, thunkAPI) => {
+export const getToken = createAsyncThunk('api/getToken', async (_: void, thunkAPI) => {
   try {
     const tokenResponse = await axios.get<IToken>(tokenUrl);
     return tokenResponse.data;
@@ -70,7 +70,7 @@ export const postUser = createAsyncThunk(
       if (error.response) {
         const responseData = error.response.data as IErrorData;
         if (error.response.status === 401) {
-          dispatch(getToken(null));
+          dispatch(getToken());
           message = responseData.message;
         } else if (error.response.status === 409) {
           message = responseData.message;

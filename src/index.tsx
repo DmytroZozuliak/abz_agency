@@ -4,13 +4,15 @@ import { Provider } from 'react-redux';
 import './index.scss';
 import App from './App';
 import { store } from './store/store';
+import { fetchPositions, getToken } from './store/ActionCreators/ActionCreators';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
+store.dispatch(getToken());
+store.dispatch(fetchPositions());
+
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>
 );

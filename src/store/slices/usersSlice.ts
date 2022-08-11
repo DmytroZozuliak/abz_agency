@@ -43,7 +43,6 @@ const usersSlice = createSlice({
     [fetchUsers.rejected.type]: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
       state.isLoading = false;
-      state.buttonDisable = true;
     },
     [fetchMoreUsers.fulfilled.type]: (state, action: PayloadAction<IUsers>) => {
       const nextLinkUsers = action.payload.links.next_url;

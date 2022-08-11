@@ -13,6 +13,10 @@ const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
   const moreButton = useRef<null | HTMLButtonElement>(null);
 
   async function getUsers(url: string | null) {
+    if (users.length === 6) {
+      // reload initial 6 users to avoid back problems
+      await dispatch(fetchUsers(1));
+    }
     url && (await dispatch(fetchMoreUsers(url)));
     moreButton.current &&
       moreButton.current.scrollIntoView({
@@ -42,7 +46,7 @@ const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          {users && users.map((user) => <CardUser key={user.registration_timestamp} user={user} />)}
+          {users && users.map((user) => <CardUser key={user.id} user={user} />)}
         </Grid>
 
         <Button

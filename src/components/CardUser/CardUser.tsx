@@ -40,7 +40,14 @@ const CardUser = ({ user }: { user: IUser }) => {
           <Avatar sx={{ width: '70px', height: '70px' }} alt={user.name} src={user.photo} />
           <Typography my="20px">{user.name}</Typography>
           <Typography>{user.position}</Typography>
-          <CustomTooltip title={user.email} placement="bottom">
+          <CustomTooltip
+            title={
+              <a href={`mailto:${user.email}`} style={{ color: 'white', textDecoration: 'none' }}>
+                {user.email}
+              </a>
+            }
+            placement="bottom"
+          >
             <Typography sx={{ cursor: 'pointer' }}>{user.email}</Typography>
           </CustomTooltip>
           <Typography>{user.phone}</Typography>
