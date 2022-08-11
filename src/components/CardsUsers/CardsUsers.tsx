@@ -5,7 +5,7 @@ import { fetchMoreUsers, fetchUsers } from '../../store/ActionCreators/ActionCre
 import CardUser from '../CardUser/CardUser';
 import classes from './CardsUsers.module.scss';
 
-const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
+const CardsUsers = forwardRef<HTMLDivElement>((_, ref) => {
   const { isLoading, error, users, linkNext, buttonDisable } = useTypedSelector(
     (state) => state.users
   );
@@ -28,7 +28,7 @@ const CardsUsers = forwardRef<HTMLDivElement>((props, ref) => {
 
   useEffect(() => {
     dispatch(fetchUsers(1));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Box component="section" className="container">

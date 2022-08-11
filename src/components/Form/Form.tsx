@@ -27,11 +27,10 @@ const Form = () => {
   const { isLoadingPositions, positions } = useTypedSelector((state) => state.positions);
   const dispatch = useTypedDispatch();
 
-  // todo
   const initialValues = {
-    name: 'gfdgdff',
-    email: 'ghhgh@gmail.com',
-    phone: '+380944444334',
+    name: '',
+    email: '',
+    phone: '',
     file: null,
     position: '',
   };
